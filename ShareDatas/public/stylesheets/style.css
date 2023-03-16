@@ -1,0 +1,50 @@
+footer {
+  padding-top: 1rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: #ccc;
+  color: black;
+}
+
+.margin-y {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.rounded-element {
+  border-radius: 24px;
+}
+
+.form-rounded {
+  border: 1px solid rgb(218, 220, 224);
+  transition: border 0.3s ease 0s;
+}
+
+.button-transparent {
+  background: none;
+  border: none;
+  font-size: large;
+}
+
+.button-container {
+  position: relative;
+  height: 40px;
+}
+
+.end-placement {
+  position: absolute;
+  right: 0;
+  /* top: 0; */
+}
+
+.icon {
+  font-size: x-large;
+}
+
+a {
+  color: black;
+  font-weight: bold;
+}

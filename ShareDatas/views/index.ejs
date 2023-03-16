@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head'); %>
+  </head>
+  <body>
+    <header><%- include('./partials/header'); %></header>
+
+    <div class="container-lg"><%- include('./partials/searchbar'); %></div>
+
+    <main class="container-lg">
+      <h1 class="margin-y">Data sets</h1>
+      <p>Lista de los data sets disponibles, agregados por los usuarios</p>
+
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn btn-dark rounded-element end-placement"
+        >
+          + Agregar Dataset
+        </button>
+      </div>
+
+      <%- include('./partials/datasettable'); %>
+    </main>
+
+    <footer><%- include('./partials/footer'); %></footer>
+  </body>
+</html>
