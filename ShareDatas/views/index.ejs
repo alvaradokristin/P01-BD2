@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <%- include('./partials/head'); %>
   </head>
@@ -12,18 +12,21 @@
       <h1 class="margin-y">Data sets</h1>
       <p>Lista de los data sets disponibles, agregados por los usuarios</p>
 
-      <div class="button-container">
+      <div class="button-container mb-2">
         <button
           type="button"
-          class="btn btn-dark rounded-element end-placement"
+          class="btn btn-dark end-placement rounded-element"
+          data-toggle="modal"
+          data-target="#myModal"
         >
           + Agregar Dataset
         </button>
       </div>
 
-      <%- include('./partials/datasettable'); %>
+      <%- include('./partials/addmodal'); %> <%-
+      include('./partials/datasettable'); %>
     </main>
 
-    <footer><%- include('./partials/footer'); %></footer>
+    <footer class="fixed-bottom"><%- include('./partials/footer'); %></footer>
   </body>
 </html>

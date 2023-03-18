@@ -1,0 +1,68 @@
+<!-- Modal -->
+<div class="modal fade" tabindex="-1" aria-hidden="true" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar un unevo data set</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-dismiss="modal"
+          aria-label="Cerrar"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="dsname" class="col-form-label">Nombre:</label>
+            <input
+              type="text"
+              class="form-control rounded-element"
+              id="dsname"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="dsdescription" class="col-form-label"
+              >Descripción:</label
+            >
+            <textarea
+              class="form-control rounded-element"
+              id="dsdescription"
+              required
+            ></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="dsimage" class="col-form-label">Imagen:</label>
+            <input
+              type="text"
+              class="form-control rounded-element"
+              id="dsimage"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="dsfile" class="col-form-label">Archivo:</label>
+            <input
+              type="file"
+              class="form-control rounded-element"
+              id="dsfile"
+              required
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-light rounded-element"
+          data-dismiss="modal"
+        >
+          Cancelar
+        </button>
+        <button type="button" class="btn btn-dark rounded-element">
+          Agregar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

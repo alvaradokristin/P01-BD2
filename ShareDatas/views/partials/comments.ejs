@@ -1,0 +1,61 @@
+<h2>Comentarios</h2>
+<!-- text field to add a comment -->
+<form action="/" class="mb-4 row g-2">
+  <label for="dscomment" class="col-form-label">Agrega un comentario</label>
+  <div class="col-lg">
+    <input type="text" class="form-control rounded-element" id="dscomment" />
+  </div>
+  <div class="col-auto">
+    <button type="submit" class="btn btn-dark rounded-element">Comentar</button>
+  </div>
+</form>
+
+<!-- all comments -->
+<div>
+  <!-- comment -->
+  <div class="desc-dwnld">
+    <div class="user">
+      <img src="https://i.pravatar.cc/50" alt="user avatar" />
+      <a href=""><span>Usuario #1</span></a>
+    </div>
+    <span class="text-muted">16/03/2023 - 13:30</span>
+  </div>
+  <p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa ab optio
+    assumenda voluptates doloribus, necessitatibus magni. Magnam nisi, a eaque
+    assumenda cupiditate voluptates, consequatur repudiandae et, quam quae unde
+    necessitatibus?
+  </p>
+  <!-- Responses -->
+  <div class="ms-5">
+    <div class="desc-dwnld">
+      <div class="user">
+        <img src="https://i.pravatar.cc/50" alt="user avatar" />
+        <a href=""><span>Usuario #2</span></a>
+      </div>
+      <span class="text-muted">17/03/2023 - 09:21</span>
+    </div>
+    <p>
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nihil, autem.
+    </p>
+  </div>
+
+  <!-- text field to add a response to that comment thread -->
+  <div class="ms-5">
+    <form action="/" class="mb-4 row g-2">
+      <div class="col-lg">
+        <input
+          type="text"
+          class="form-control rounded-element"
+          id="dscomment"
+          placeholder="Responder al comentario"
+        />
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-dark rounded-element">
+          Comentar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

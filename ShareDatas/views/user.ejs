@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include('./partials/head'); %>
+  </head>
+  <body>
+    <header><%- include('./partials/header'); %></header>
+
+    <div class="container-lg"><%- include('./partials/searchbar'); %></div>
+
+    <main class="container-lg">
+      <div class="desc-dwnld py-1">
+        <div class="user-page">
+          <img src="https://i.pravatar.cc/50" alt="user avatar" />
+          <a href=""><span>Usuario #1</span></a>
+        </div>
+
+        <div class="row g-2">
+          <div class="col-lg">
+            <button type="submit" class="btn btn-light rounded-element">
+              Mensaje
+            </button>
+          </div>
+
+          <div class="col-lg">
+            <button type="submit" class="btn btn-dark rounded-element">
+              Seguir
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <p>Data sets agregados por este usuario</p>
+
+      <%- include('./partials/dstsusers'); %>
+    </main>
+
+    <footer class="fixed-bottom"><%- include('./partials/footer'); %></footer>
+  </body>
+</html>

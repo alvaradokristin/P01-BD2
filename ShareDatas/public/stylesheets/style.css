@@ -1,17 +1,16 @@
 footer {
   padding-top: 1rem;
-  position: absolute;
+  position: relative;
   bottom: 0;
   left: 0;
   right: 0;
   height: 100px;
-  background: #ccc;
+  background: #9498f2;
   color: black;
 }
 
-.margin-y {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+.bg-custum {
+  background-color: #f9f9f9;
 }
 
 .rounded-element {
@@ -37,7 +36,6 @@ footer {
 .end-placement {
   position: absolute;
   right: 0;
-  /* top: 0; */
 }
 
 .icon {
@@ -47,4 +45,113 @@ footer {
 a {
   color: black;
   font-weight: bold;
+}
+
+.dstheader {
+  /* Make it fixed to keep it visible when scrolling down */
+  /* position: fixed; */
+  /* top: 135px; */
+  /* z-index: 9999; */
+  background-color: #ffffff;
+}
+
+.desc-dwnld {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.desc-dwnld h1 {
+  font-weight: bold;
+}
+
+.desc-dwnld p {
+  text-align: center;
+  margin-top: auto;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+}
+
+.user img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.user a {
+  color: #d55361;
+  text-decoration: none;
+}
+
+.user span {
+  font-size: 14pt;
+}
+
+.user-page {
+  display: flex;
+  align-items: center;
+}
+
+.user-page img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.user-page a {
+  color: #d55361;
+  text-decoration: none;
+}
+
+.user-page span {
+  font-size: 16pt;
+}
+
+.pre-background {
+  background-color: rgba(230, 230, 250, 0.322);
+  border-radius: 15px;
+}
+
+.ds-data {
+  /* Add marging top if the data set header has a position: fixed */
+  /* margin-top: 130px; */
+  padding-top: 15px;
+}
+
+/* ---------------------------------------------- */
+.fade {
+  opacity: 0;
+  -webkit-transition: opacity 0.15s linear;
+  -o-transition: opacity 0.15s linear;
+  transition: opacity 0.15s linear;
+}
+.fade.in {
+  opacity: 1;
+}
+.modal.fade .modal-dialog {
+  -webkit-transform: translate(0, -25%);
+  -ms-transform: translate(0, -25%);
+  -o-transform: translate(0, -25%);
+  transform: translate(0, -25%);
+  -webkit-transition: -webkit-transform 0.3s ease-out;
+  -o-transition: -o-transform 0.3s ease-out;
+  transition: -webkit-transform 0.3s ease-out;
+  transition: transform 0.3s ease-out;
+  transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out,
+    -o-transform 0.3s ease-out;
+}
+.modal.in .modal-dialog {
+  -webkit-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  -o-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+.modal-open .modal {
+  overflow-x: hidden;
+  overflow-y: auto;
 }
