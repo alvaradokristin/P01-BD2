@@ -3,7 +3,7 @@
 CREATE DATABASE sharedatas;
 
 USE sharedatas;
-
+DELIMITER //
 # ---------------------- CRETAE THE TABLES ---------------------- #
 -- MESSAGES
 CREATE TABLE messages (
@@ -51,22 +51,3 @@ VALUES ('usuario1', 'usuario2', 'Todo bien, todo bien, me compartes el url de tu
 
 INSERT INTO messages (sender_id, receiver_id, message_text)
 VALUES ('usuario2', 'usuario1', 'Si claro! Mira ahorita no lo tengo, pero dame unos minutos y lo busco :)');
-
--- FIX THIS, CAN'T USE LOAD_FILE
-#INSERT INTO message_attachments (filename, filetype, data)
-#VALUES ('foto.jpg', 'image/jpeg', LOAD_FILE('/C:/Users/kag07/Documents/illust-ex.jpg'));
-
-SELECT * FROM messages;
-
-# ---------------------- PROCEDURES ---------------------- #
--- procedure to get all the user ids from the massages of an specific user
-
-
-CALL get_users_with_messages('usuario1');
-CALL get_messages_from_conversation('usuario1', 'usuario2');
-
-CALL send_message("usuario1", "usuario2", "Hola, hola, ya lo encontraste?");
-
-CALL send_message("usuario2", "usuario1", "Test");
-
-SELECT * FROM messages
