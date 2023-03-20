@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include('./partials/head'); %>
+  </head>
+  <body>
+    <header><%- include('./partials/header'); %></header>
+
+    <!-- using for to go through the json of the data from the sql query and add the messages and images from the conversation
+         if the message is not form the current user, the content will stay at the left
+         (else) the message if from the current user, the content will move to the end of the screen (the right part) -->
+
+
+    <main class="scroll-container col">
+      <div class="container-lg col">
+        <% msgdata.forEach(function(result) { %> <% if (result.sender_id !=
+        current_user) { %>
+        <div class="row">
+          <%- include('./partials/msg', { msgData: result }) %> <% if
+          (result.data != null) { %>
+          <img
+            src="data:<%= result.filetype %>;base64,<%= result.data.toString('base64') %>"
+            alt="Imagen"
+            style="height: 100px; width: 100px"
+          />
+          <% } %>
+        </div>
+        <% } else { %>
+        <div class="row">
+          <%- include('./partials/pusr', { msgData: result }) %> <% if
+          (result.data != null) { %>
+          <div class="msg-image-cont">
+            <img
+              src="data:<%= result.filetype %>;base64,<%= result.data.toString('base64') %>"
+              class="image rounded-4"
+              alt="Imagen"
+            />
+          </div>
+          <% } %>
+        </div>
+        <% } %> <% }) %>
+      </div>
+    </main>
+
+    <%- include('./partials/sendmsg', {fuser: current_user, suser: secuser}); %>
+  </body>
+
+  <footer class="fixed-bottom"><%- include('./partials/footer'); %></footer>
+</html>

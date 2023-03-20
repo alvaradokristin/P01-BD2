@@ -123,6 +123,45 @@ a {
   padding-top: 15px;
 }
 
+.text-msg-bg {
+  background-color: #9499f283;
+  max-width: 300px;
+}
+
+.scroll-container {
+  height: 370px;
+  overflow: auto;
+}
+
+@media (min-width: 1824px) {
+  .scroll-container {
+    height: 550px;
+  }
+}
+
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.flex-start {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.msg-image-cont {
+  overflow: auto;
+}
+
+.image {
+  float: right;
+  width: 15%;
+}
+
 /* ---------------------------------------------- */
 .fade {
   opacity: 0;

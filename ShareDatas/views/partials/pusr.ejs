@@ -1,0 +1,20 @@
+<!-- principal user - user that is logged in
+used for the messages part -->
+<div class="container-lg mt-1 justify-content-end">
+  <div class="row g-2">
+    <div class="col-10 text-end">
+      <span class="text-muted"><%= msgData.created_at %></span>
+    </div>
+    <div class="col">
+      <div class="user justify-content-end">
+        <a class="pe-2" href=""><span><%= msgData.sender_id %></span></a>
+        <img src="https://i.pravatar.cc/50" alt="user avatar" />
+      </div>
+    </div>
+  </div>
+  <div class="flex-end">
+    <p class="me-4 my-2 text-msg-bg rounded-4 p-2">
+      <%= msgData.message_text %>
+    </p>
+  </div>
+</div>

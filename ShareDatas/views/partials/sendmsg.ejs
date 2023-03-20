@@ -1,0 +1,28 @@
+<div class="container-lg mt-3">
+  <form
+    action="/sendmsg/<%= fuser %>/<%= suser %>"
+    method="post"
+    class="mb-4 row g-2"
+    enctype="multipart/form-data"
+  >
+    <div class="col-lg">
+      <input
+        type="text"
+        class="form-control rounded-element"
+        id="message"
+        name="message"
+        placeholder="Enviar mensaje"
+        required
+      />
+    </div>
+    <div class="col-auto">
+      <label for="file" class="btn btn-light rounded-element">
+        <i class="fa-solid fa-camera"></i>
+      </label>
+      <input id="file" name="file" type="file" style="display: none" />
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-dark rounded-element">Enviar</button>
+    </div>
+  </form>
+</div>
