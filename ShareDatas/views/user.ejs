@@ -12,29 +12,58 @@
       <div class="desc-dwnld py-1">
         <div class="user-page">
           <img src="https://i.pravatar.cc/50" alt="user avatar" />
-          <a href=""><span>Usuario #1</span></a>
+          <a href=""><span><%= suser %></span></a>
         </div>
 
         <div class="row g-2">
           <div class="col-lg">
-            <button type="submit" class="btn btn-light rounded-element">
-              Mensaje
-            </button>
+            <a
+              href="/msgconversation/<%= cuser %>/<%= suser %>"
+              class="btn btn-light rounded-element"
+              ><span>Mensaje</span></a
+            >
           </div>
 
           <div class="col-lg">
-            <button type="submit" class="btn btn-dark rounded-element">
-              Seguir
-            </button>
+            <% if (following.following != 0) { %>
+            <a class="btn btn-dark rounded-element" id="followUser"
+              ><span>Unfollow</span></a
+            >
+            <% } else { %>
+            <a class="btn btn-dark rounded-element" id="followUser"
+              ><span>Folow</span></a
+            >
+            <% } %>
           </div>
         </div>
       </div>
 
-      <p>Data sets agregados por este usuario</p>
+      <h3>Data sets agregados por este usuario</h3>
 
       <%- include('./partials/dstsusers'); %>
     </main>
 
     <footer class="fixed-bottom"><%- include('./partials/footer'); %></footer>
   </body>
+
+  <script>
+    // funcion that will review if the current user (cuser) wants to follow the selected user (suser)
+    // based on the selection, will pass the user they want to follow/ unfollow and
+    // call the /follow function from the server.js with the new user id and the action (follow or unfollow)
+    var myLink = document.getElementById("followUser");
+    var following = `<%= following.following %>`;
+    myLink.addEventListener("click", function (e) {
+      e.preventDefault();
+      var confirmMessage = "";
+      if (following === "0") {
+        confirmMessage = `Ahora estás siguiendo a este usuario: <%= suser %>`;
+        window.alert(confirmMessage);
+        window.location.href = "/follow/<%= suser %>/follow";
+      } else {
+        confirmMessage = `Has dejado de seguir a este usuario: <%= suser %>`;
+        window.alert(confirmMessage);
+        window.location.href = "/follow/<%= suser %>/unfollow";
+      }
+    });
+  </script>
 </html>

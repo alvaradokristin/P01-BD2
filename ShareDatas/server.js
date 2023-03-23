@@ -15,9 +15,11 @@ app.set("view engine", "ejs");
 
 app.use(express.static(path.join(__dirname, "public")));
 
+let current_user = 'usuario3';
+
 // may not be necessary or it should be changed
 app.get("/", (req, res) => {
-    res.render("index");
+    res.render("index", { cuser: current_user });
 })
 
 app.get("/dataset", (req, res) => {
@@ -25,7 +27,6 @@ app.get("/dataset", (req, res) => {
 });
 
 app.get("/conversations", (req, res) => {
-    const current_user = 'usuario1'
     let query = `CALL get_users_with_messages('${current_user}');`
     sqlCon.query(query, function (err, result) {
         if (err) throw err;
@@ -89,8 +90,31 @@ app.post("/sendmsg/:fuser/:suser", uploadsql.single("file"), (req, res) => {
     }
 });
 
-app.get("/user", (req, res) => {
-    res.render("./user");
+app.get("/user/:id", (req, res) => {
+    const seluser = req.params.id;
+    let query = `SELECT is_following('${seluser}', '${current_user}') AS following;`
+    sqlCon.query(query, function (err, result) {
+        if (err) throw err;
+        res.render("./user", { suser: seluser, cuser: current_user, following: result[0] });
+    });
+});
+
+app.get("/follow/:id/:action", (req, res) => {
+    const seluser = req.params.id;
+    const action = req.params.action;
+
+    let query = "";
+
+    if (action === "follow") {
+        query = `CALL add_follower('${current_user}', '${seluser}');`;
+    } else {
+        query = `CALL unfollow_user('${current_user}', '${seluser}');`;
+    }
+
+    sqlCon.query(query, function (err, result) {
+        if (err) throw err;
+        res.render("./user", { suser: seluser, cuser: current_user, following: result[0][0] });
+    });
 });
 
 app.get('/image/:id', (req, res) => {
