@@ -14,10 +14,7 @@
 <div>
   <!-- comment -->
   <div class="desc-dwnld">
-    <div class="user">
-      <img src="https://i.pravatar.cc/50" alt="user avatar" />
-      <a href=""><span>Usuario #1</span></a>
-    </div>
+    <%- include('./usr', {suser: 'usuario1'}); %>
     <span class="text-muted">16/03/2023 - 13:30</span>
   </div>
   <p>
@@ -29,10 +26,7 @@
   <!-- Responses -->
   <div class="ms-5">
     <div class="desc-dwnld">
-      <div class="user">
-        <img src="https://i.pravatar.cc/50" alt="user avatar" />
-        <a href=""><span>Usuario #2</span></a>
-      </div>
+      <%- include('./usr', {suser: 'usuario2'}); %>
       <span class="text-muted">17/03/2023 - 09:21</span>
     </div>
     <p>

@@ -15,15 +15,19 @@ app.set("view engine", "ejs");
 
 app.use(express.static(path.join(__dirname, "public")));
 
-let current_user = 'usuario3';
+let current_user = 'usuario113';
 
-// may not be necessary or it should be changed
 app.get("/", (req, res) => {
     res.render("index", { cuser: current_user });
-})
+});
 
-app.get("/dataset", (req, res) => {
-    res.render("./dataset");
+app.get('/modal', (req, res) => {
+    console.log("Este es un test, aca deberia hacer algo para tomar las notificaciones y ponerlar en el modal")
+});
+
+app.get("/dataset/:name", (req, res) => {
+    const name = req.params.name;
+    res.render("./dataset", { dtsname: name });
 });
 
 app.get("/conversations", (req, res) => {

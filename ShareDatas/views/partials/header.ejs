@@ -24,6 +24,18 @@
       <ul class="navbar-nav flex-grow align-items-end">
         <li class="nav-item dropdown">
           <a
+            href="/modal"
+            class="nav-link icon"
+            id="navbarDropdown"
+            role="button"
+            data-toggle="modal"
+            data-target="#notificationModal"
+            ><i class="fa-solid fa-bell"></i
+          ></a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a
             href="/conversations"
             class="nav-link icon"
             id="navbarDropdown"
@@ -41,4 +53,6 @@
       </ul>
     </div>
   </div>
+
+  <%- include('./notifmodal'); %>
 </nav>
