@@ -9,12 +9,26 @@
     <th></th>
   </tr>
   <tr>
-    <td><a href="/user">Usuario #1</a></td>
-    <td><a href="/dataset">Ejemplo #1</a></td>
+    <td><%- include('./usr', {suser: 'usuario3'}); %></td>
+    <td><a href="/dataset/Ejemplo1">Ejemplo #1</a></td>
     <td>Ejemplo #1</td>
     <td>Ejemplo #1</td>
     <td>Ejemplo #1</td>
     <td>Ejemplo #1</td>
+
+    <td>
+      <button class="button-transparent">
+        <i class="fa-solid fa-download"></i>
+      </button>
+    </td>
+  </tr>
+  <tr>
+    <td><%- include('./usr', {suser: 'usuario5'}); %></td>
+    <td><a href="/dataset/Ejemplo1">Ejemplo #2</a></td>
+    <td>Ejemplo #2</td>
+    <td>Ejemplo #2</td>
+    <td>Ejemplo #2</td>
+    <td>Ejemplo #2</td>
 
     <td>
       <button class="button-transparent">

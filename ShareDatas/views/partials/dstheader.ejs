@@ -1,6 +1,6 @@
 <div class="container-lg dstheader border-bottom">
   <div class="desc-dwnld py-1">
-    <h1>Nombre del data set</h1>
+    <h1><%= dtsname %></h1>
     <div class="button-container">
       <button type="button" class="btn btn-dark end-placement rounded-element">
         Descargar
@@ -8,10 +8,7 @@
     </div>
   </div>
   <div class="desc-dwnld py-1">
-    <div class="user">
-      <img src="https://i.pravatar.cc/50" alt="user avatar" />
-      <a href=""><span>Usuario #1</span></a>
-    </div>
+    <%- include('./usr', {suser: 'usuario1'}); %>
     <span>17/03/2023</span>
   </div>
   <%- include('./follows'); %>

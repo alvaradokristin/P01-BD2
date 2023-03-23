@@ -70,3 +70,34 @@ BEGIN
 	  WHERE (sender_id = fuser AND receiver_id = suser) OR (sender_id = suser AND receiver_id = fuser)
       ORDER BY mgs.created_at;
 END;
+
+CREATE FUNCTION `is_following`(fuser VARCHAR(25), suser VARCHAR(25)) RETURNS tinyint(1)
+    DETERMINISTIC
+BEGIN
+  DECLARE following BOOLEAN;
+  SELECT COUNT(*) INTO following FROM followers WHERE user_id = fuser AND follower_id = suser;
+  RETURN following;
+END;
+
+CREATE PROCEDURE `add_follower`(fuser VARCHAR(25), suser VARCHAR(25))
+BEGIN
+	INSERT INTO followers (user_id, follower_id)
+	VALUES (suser, fuser);
+    
+    SELECT is_following( suser, fuser) AS following;
+END;
+
+CREATE PROCEDURE `unfollow_user`(fuser VARCHAR(25), suser VARCHAR(25))
+BEGIN
+	DELETE FROM followers WHERE follower_id = fuser AND user_id = suser;
+    
+    SELECT is_following( suser, fuser) AS following;
+END;
+
+CREATE PROCEDURE `users_following`(suser VARCHAR(25))
+BEGIN
+	SELECT DISTINCT 
+	follower_id
+    FROM followers
+    WHERE user_id = suser;
+END;
