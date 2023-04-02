@@ -20,9 +20,17 @@
           result.filetype === 'image/jpeg')) { %>
           <img
             src="data:<%= result.filetype %>;base64,<%= result.data.toString('base64') %>"
+            class="image rounded-4"
             alt="Imagen"
-            style="height: 100px; width: 100px"
           />
+          <% } %> <% if (result.filetype != null && (result.filetype ===
+          'video/mp4' || result.filetype === 'video/webm')) { %>
+          <video
+            class="video rounded-4"
+            src="data:<%= result.filetype %>;base64,<%= result.data.toString('base64') %>"
+            controls
+            loop
+          ></video>
           <% } %>
         </div>
         <% } else { %>
@@ -33,9 +41,19 @@
           <div class="msg-image-cont">
             <img
               src="data:<%= result.filetype %>;base64,<%= result.data.toString('base64') %>"
-              class="image rounded-4"
+              class="image rounded-4 float-end"
               alt="Imagen"
             />
+          </div>
+          <% } %> <% if (result.filetype != null && (result.filetype ===
+          'video/mp4' || result.filetype === 'video/webm')) { %>
+          <div class="msg-image-cont">
+            <video
+              class="video rounded-4 float-end"
+              src="data:<%= result.filetype %>;base64,<%= result.data.toString('base64') %>"
+              controls
+              loop
+            ></video>
           </div>
           <% } %>
         </div>
