@@ -1,23 +1,29 @@
 <table class="table table-striped margin-y">
-  <tr>
-    <th>Nombre</th>
-    <th>Descripcion</th>
-    <th>Fecha Inclusión</th>
-    <th>Imagen</th>
-    <th>Tamaño</th>
-    <th></th>
-  </tr>
-  <tr>
-    <td><a href="/dataset/Ejemplo1">Ejemplo #1</a></td>
-    <td>Ejemplo #1</td>
-    <td>Ejemplo #1</td>
-    <td>Ejemplo #1</td>
-    <td>Ejemplo #1</td>
-
-    <td>
-      <button class="button-transparent">
-        <i class="fa-solid fa-download"></i>
-      </button>
-    </td>
-  </tr>
+  <thead>
+    <tr>
+      <th>Usuario</th>
+      <th>Nombre</th>
+      <th>Descripción</th>
+      <th>Fecha de Inclusión</th>
+      <th>Imagen</th>
+      <th>Tamaño</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% dataset.forEach(function(result) { %>
+      <tr>
+        <td><%- include('./usr', {suser: result.userCreator}); %></td>
+        <td><%= result.nombre %></td>
+        <td><%= result.descripcion %></td>
+        <td><%= result.fecha %></td>
+        <td><img src="<%= result.imagen %>" alt="Imagen de <%= result.nombre %>" /></td>
+        <td><%= result.tamanno %></td>
+        <td>
+          <button class="button-transparent">
+            <i class="fa-solid fa-download"></i>
+          </button>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
 </table>
