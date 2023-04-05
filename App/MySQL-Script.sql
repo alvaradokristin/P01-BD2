@@ -1,9 +1,9 @@
+DELIMITER //
 # ---------------------- CRETAE THE DATABASE ---------------------- #
 #-------------------------------------------------------------------#
 CREATE DATABASE sharedatas;
 
 USE sharedatas;
-DELIMITER //
 # ---------------------- CRETAE THE TABLES ---------------------- #
 -- MESSAGES
 CREATE TABLE messages (
@@ -22,7 +22,8 @@ CREATE TABLE message_attachments (
   filetype VARCHAR(30) NOT NULL,
   data LONGBLOB NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  FOREIGN KEY (message_id) REFERENCES messages(id)
 );
 
 -- FOLLOWERS
