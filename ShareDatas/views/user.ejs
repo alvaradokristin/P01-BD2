@@ -40,7 +40,8 @@
 
       <h3>Data sets agregados por este usuario</h3>
 
-      <%- include('./partials/dstsusers'); %>
+      <%- include('./partials/dstsusers', { dataset: dataset }); %>
+      
     </main>
 
     <footer class="fixed-bottom"><%- include('./partials/footer'); %></footer>

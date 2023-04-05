@@ -4,6 +4,7 @@ const fs = require('fs');
 const app = express();
 
 const sqlCon = require("./sqldatabase");
+const neo4jCon = require("./neo4jdatabase");
 const moment = require('moment');
 
 const uploadsql = multer({ dest: "sqluploads" });
@@ -17,8 +18,11 @@ app.use(express.static(path.join(__dirname, "public")));
 
 let current_user = 'usuario113';
 
-app.get("/", (req, res) => {
-    res.render("index", { cuser: current_user });
+app.get("/", async (req, res) => {
+    let query = "MATCH (d:Dataset) RETURN d.user AS userCreator, d.nombre AS nombre, d.descripcion AS descripcion, d.fecha AS fecha, d.tamanno AS tamanno";
+    
+    const datasetResults = await neo4jCon(query); 
+    res.render("index", { datasets: datasetResults, cuser: current_user });
 });
 
 app.get('/modal', (req, res) => {
@@ -48,6 +52,7 @@ app.get("/msgconversation/:fuser/:suser", (req, res) => {
         res.render("./msgconversation", { msgdata: result[0], current_user: fuser, secuser: suser });
     });
 });
+
 
 app.post("/sendmsg/:fuser/:suser", uploadsql.single("file"), (req, res) => {
     const fuser = req.params.fuser;
@@ -94,12 +99,14 @@ app.post("/sendmsg/:fuser/:suser", uploadsql.single("file"), (req, res) => {
     }
 });
 
-app.get("/user/:id", (req, res) => {
+app.get("/user/:id", async (req, res) => {
     const seluser = req.params.id;
+    const querydataset = `MATCH (d:Dataset ) RETURN d.userCreator AS userCreator, d.nombre AS nombre, d.descripcion AS descripcion, d.fecha AS fecha, d.tamanno AS tamanno`;
+    const datasetResults = await neo4jCon(querydataset);
     let query = `SELECT is_following('${seluser}', '${current_user}') AS following;`
     sqlCon.query(query, function (err, result) {
         if (err) throw err;
-        res.render("./user", { suser: seluser, cuser: current_user, following: result[0] });
+        res.render("./user", {dataset: datasetResults, suser: seluser, cuser: current_user, following: result[0] });
     });
 });
 
@@ -138,6 +145,49 @@ app.get('/image/:id', (req, res) => {
         }
     );
 });
+
+
+app.get("/dstsusers", async (req, res) => {
+
+    const { userCreator, nombre, descripcion, archivo, fecha, tamanno } = req.body;
+    archivo = fs.readFileSync(req.file.path); 
+    
+    const query = `MATCH (d:Dataset {user: $userCreator, nombre: $nombre, 
+    descripcion: $descripcion, archivo: $archivo, fecha: $fecha, tamanno: $tamanno})
+    RETURN d`;
+    
+    const dataResults = await neo4jCon(query); 
+    console.log(dataResults);
+    fs.unlinkSync(uploadData.path);
+    res.render('./user', { dataset: dataResults, cuser: current_user });
+});
+
+app.get("/user", async (req, res) => {
+    const { user } = req.params;
+  
+    const query = `MATCH (d:Dataset {user: $user}) RETURN d`;
+    const datasetResults = await neo4jCon(query, { user });
+  
+    res.render("user", { dataset: datasetResults, cuser: current_user });
+});
+
+
+app.post("/datasetAgre", uploadsql.single('file'), async (req, res) => {
+    console.log("Entro");
+    const { userCreator, nombre, descripcion, archivo, fecha, tamanno } = req.body;
+    archivo = fs.readFileSync(req.file.path); 
+    
+    
+    const query = `CREATE (d:Dataset {user: $userCreator, nombre: $nombre, 
+    descripcion: $descripcion, archivo: $archivo, fecha: $fecha, tamanno: $tamanno})
+    RETURN d`;
+    
+    
+    const datasetResults = await neo4jCon(query); 
+    fs.unlinkSync(uploadData.path);
+    res.render("index", { datasets: datasetResults, cuser: current_user });
+});
+
 
 app.listen(3000, function () {
     sqlCon.connect(function (err) {
