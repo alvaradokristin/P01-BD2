@@ -23,9 +23,12 @@
         </button>
       </div>
 
-      <%- include('./partials/addmodal'); %> 
-      <%-include('./partials/datasettable', {datasets: datasets, cuser: cuser}); %>
-      
+      <%- include('./partials/addmodal'); %>
+
+      <div class="scroll-container">
+        <%-include('./partials/datasettable', {datasets: datasets, cuser:
+        cuser}); %>
+      </div>
     </main>
 
     <footer class="fixed-bottom"><%- include('./partials/footer'); %></footer>

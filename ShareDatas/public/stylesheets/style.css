@@ -161,8 +161,19 @@ a {
   width: 15%;
 }
 
+.image-lg {
+  width: 45%;
+}
+
 .video {
   width: 25%;
+}
+
+.table_header_max_w {
+  max-width: 450px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ---------------------------------------------- */

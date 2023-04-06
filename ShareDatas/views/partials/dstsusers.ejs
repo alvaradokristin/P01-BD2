@@ -5,25 +5,23 @@
       <th>Nombre</th>
       <th>Descripción</th>
       <th>Fecha de Inclusión</th>
-      <th>Imagen</th>
       <th>Tamaño</th>
     </tr>
   </thead>
   <tbody>
     <% dataset.forEach(function(result) { %>
-      <tr>
-        <td><%- include('./usr', {suser: result.userCreator}); %></td>
-        <td><%= result.nombre %></td>
-        <td><%= result.descripcion %></td>
-        <td><%= result.fecha %></td>
-        <td><img src="<%= result.imagen %>" alt="Imagen de <%= result.nombre %>" /></td>
-        <td><%= result.tamanno %></td>
-        <td>
-          <button class="button-transparent">
-            <i class="fa-solid fa-download"></i>
-          </button>
-        </td>
-      </tr>
+    <tr>
+      <td><%- include('./usr', {suser: result.userCreator}); %></td>
+      <td><a href="/dataset/<%= result.id %>"><%= result.nombre %></a></td>
+      <td class="table_header_max_w"><%= result.descripcion %></td>
+      <td><%= result.fecha %></td>
+      <td><%= result.tamanno %></td>
+      <td>
+        <button class="button-transparent">
+          <i class="fa-solid fa-download"></i>
+        </button>
+      </td>
+    </tr>
     <% }) %>
   </tbody>
 </table>

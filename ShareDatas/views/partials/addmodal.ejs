@@ -12,17 +12,15 @@
         ></button>
       </div>
       <div class="modal-body">
-        <form
-        action ="/datasetAgre"
-        method="post"
-        enctype="multipart/form-data"
-        >
+        <form action="/addDataset" method="post" enctype="multipart/form-data">
           <div class="mb-3">
-            <label for="dsname" class="col-form-label">Nombre:</label>
+            <label for="dsName" class="col-form-label">Nombre:</label>
             <input
               type="text"
               class="form-control rounded-element"
-              id="dsname"
+              id="dsName"
+              name="dsName"
+              placeholder="Nombre del dataset"
               required
             />
           </div>
@@ -33,39 +31,44 @@
             <textarea
               class="form-control rounded-element"
               id="dsdescription"
+              name="dsdescription"
+              placeholder="Descripción del dataset"
               required
             ></textarea>
           </div>
           <div class="mb-3">
-            <label for="dsimage" class="col-form-label">Imagen:</label>
+            <label for="imgFile" class="col-form-label">Imagen:</label>
             <input
-              type="text"
+              type="file"
               class="form-control rounded-element"
-              id="dsimage"
+              id="imgFile"
+              name="imgFile"
             />
           </div>
           <div class="mb-3">
             <label for="dsfile" class="col-form-label">Archivo:</label>
             <input
               type="file"
+              name="file"
               class="form-control rounded-element"
               id="dsfile"
               required
             />
           </div>
+
+          <div class="mb-3 flex-end">
+            <button
+              type="button"
+              class="btn btn-light rounded-element"
+              data-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button type="submit" class="btn btn-dark rounded-element">
+              Agregar
+            </button>
+          </div>
         </form>
-      </div>
-      <div class="modal-footer">
-        <button
-          type="button"
-          class="btn btn-light rounded-element"
-          data-dismiss="modal"
-        >
-          Cancelar
-        </button>
-        <button type="button" class="btn btn-dark rounded-element">
-          Agregar
-        </button>
       </div>
     </div>
   </div>
