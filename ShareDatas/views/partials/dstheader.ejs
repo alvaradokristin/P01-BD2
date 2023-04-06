@@ -1,6 +1,6 @@
 <div class="container-lg dstheader border-bottom">
   <div class="desc-dwnld py-1">
-    <h1><%= dtsname %></h1>
+    <h1><%= datasetData.nombre %></h1>
     <div class="button-container">
       <button type="button" class="btn btn-dark end-placement rounded-element">
         Descargar
@@ -8,8 +8,8 @@
     </div>
   </div>
   <div class="desc-dwnld py-1">
-    <%- include('./usr', {suser: 'usuario1'}); %>
-    <span>17/03/2023</span>
+    <%- include('./usr', {suser: datasetData.userCreator}); %>
+    <span><%= datasetData.fecha %></span>
   </div>
   <%- include('./follows'); %>
 </div>

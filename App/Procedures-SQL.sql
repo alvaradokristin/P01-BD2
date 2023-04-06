@@ -101,3 +101,26 @@ BEGIN
     FROM followers
     WHERE user_id = suser;
 END;
+
+CREATE PROCEDURE `add_dataset_files`(ndataset_id INT, nfilename VARCHAR(255), nfiletype VARCHAR(30), ndata LONGBLOB, nimage_name VARCHAR(255), nimage_type VARCHAR(30), nimage_data LONGBLOB)
+BEGIN
+	DECLARE last_insert_id INT;
+
+	INSERT INTO dataset_files (dataset_id, filename, filetype, data, image_name, image_type, image_data)
+	VALUES (ndataset_id, nfilename, nfiletype, ndata, nimage_name, nimage_type, nimage_data);
+    
+    SET last_insert_id = LAST_INSERT_ID();
+    
+    SELECT 
+	  *
+	  FROM dataset_files
+	  WHERE id = last_insert_id;
+END;
+
+CREATE PROCEDURE `get_files_from_dataset`(sdataset_id INT)
+BEGIN
+    SELECT
+		*
+	FROM dataset_files
+    WHERE dataset_id = sdataset_id;
+END;

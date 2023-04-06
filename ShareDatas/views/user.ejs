@@ -12,9 +12,10 @@
       <div class="desc-dwnld py-1">
         <div class="user-page">
           <img src="https://i.pravatar.cc/50" alt="user avatar" />
-          <a href=""><span><%= suser %></span></a>
+          <span class="fw-bold"><%= suser %></span>
         </div>
 
+        <% if (suser != cuser) { %>
         <div class="row g-2">
           <div class="col-lg">
             <a
@@ -36,12 +37,12 @@
             <% } %>
           </div>
         </div>
+        <% } %>
       </div>
 
       <h3>Data sets agregados por este usuario</h3>
 
       <%- include('./partials/dstsusers', { dataset: dataset }); %>
-      
     </main>
 
     <footer class="fixed-bottom"><%- include('./partials/footer'); %></footer>

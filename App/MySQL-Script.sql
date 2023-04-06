@@ -35,6 +35,19 @@ CREATE TABLE followers (
   PRIMARY KEY (id)
 );
 
+-- DATASET FILES
+CREATE TABLE dataset_files (
+  id INT NOT NULL AUTO_INCREMENT,
+  dataset_id INT NOT NULL,
+  filename VARCHAR(255),
+  filetype VARCHAR(30),
+  data LONGBLOB NOT NULL,
+  image_name VARCHAR(255),
+  image_type VARCHAR(30),
+  image_data LONGBLOB,
+  PRIMARY KEY (id)
+);
+
 # ---------------------- INSERTS ---------------------- #
 INSERT INTO messages (sender_id, receiver_id, message_text)
 VALUES ('usuario1', 'usuario2', 'Hola, ¿cómo estás?');

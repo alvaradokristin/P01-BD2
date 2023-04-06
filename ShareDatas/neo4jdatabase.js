@@ -13,16 +13,18 @@ async function queryRun(query) {
 
     const datasetResults = response.records.map((record) => {
         return {
+          id: record.get("id").toNumber(),
           userCreator: record.get("userCreator"),
           nombre: record.get("nombre"),
           descripcion: record.get("descripcion"),
-          fecha: record.get("fecha"),
-          tamanno: record.get("tamanno")
+          // archivo: record.get("archivo"),
+          // imagen: record.get("imagen"),
+          fecha: record.get("fecha")
+          // tamanno: record.get("tamanno").toNumber()
           };
       });
 
     session.close();
-    //console.log(datasetResults);
     return datasetResults;
 
 }
