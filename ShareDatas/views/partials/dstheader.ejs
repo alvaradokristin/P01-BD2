@@ -2,9 +2,11 @@
   <div class="desc-dwnld py-1">
     <h1><%= datasetData.nombre %></h1>
     <div class="button-container">
-      <button type="button" class="btn btn-dark end-placement rounded-element">
-        Descargar
-      </button>
+      <a
+        href="/download/<%= dsData.id %>"
+        class="btn btn-dark end-placement rounded-element"
+        >Descargar</a
+      >
     </div>
   </div>
   <div class="desc-dwnld py-1">

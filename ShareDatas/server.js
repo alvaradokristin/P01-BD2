@@ -472,6 +472,19 @@ app.get("/download/:id", (req, res) => {
             res.set("Content-Disposition", `attachment; filename=${zipName}`);
             res.set("Content-Length", zipContent.length);
             res.send(zipContent);
+
+            // delete the files from disk
+            fs.unlink(fileName, (error) => {
+              if (error) throw error;
+            });
+
+            fs.unlink(imageName, (error) => {
+              if (error) throw error;
+            });
+
+            fs.unlink("dataset.zip", (error) => {
+              if (error) throw error;
+            });
           });
         });
       } catch {
@@ -487,6 +500,15 @@ app.get("/download/:id", (req, res) => {
           res.set("Content-Disposition", `attachment; filename=${zipName}`);
           res.set("Content-Length", zipContent.length);
           res.send(zipContent);
+
+          // delete the files from disk
+          fs.unlink(fileName, (error) => {
+            if (error) throw error;
+          });
+
+          fs.unlink("dataset.zip", (error) => {
+            if (error) throw error;
+          });
         });
       }
     });
