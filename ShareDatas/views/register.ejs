@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>Register</title>
+        <style>
+            /* Add some style to the buttons */
+            button {
+                border: none;
+                border-radius: 20px;
+                padding: 10px 20px;
+                background-color: black;
+                color: white;
+                font-size: 16px;
+                cursor: pointer;
+            }
+            button:hover {
+            background-color: grey;
+        }
+    </style>
+</head>
+<body>
+    <h1>Register</h1>
+    <form method="post" action="/register">
+        <input type="text" name="username" placeholder="Username" required><br><br>
+        <input type="password" name="password" placeholder="Password" required><br><br>
+        <input type="text" name="firstName" placeholder="First Name" required><br><br>
+        <input type="text" name="lastName" placeholder="Last Name" required><br><br>
+        <input type="date" name="dateOfBirth" placeholder="Date of Birth" required max="<%= new Date().toISOString().split('T')[0] %>"><br><br>
+        <button type="submit">Register</button>
+    </form>
+    <button onclick="location.href='/login'">Login</button>
+</body>
+</html>
