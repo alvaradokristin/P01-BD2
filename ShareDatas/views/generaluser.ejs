@@ -1,80 +1,67 @@
-<!-- user -->
-<div class="user fade" tabindex="-1" aria-hidden="true" id="generalUser">
-    <div class="user-dialog">
-      <div class="user-content">
-        <div class="user-header">
-          <h5 class="user-title">Usuario</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-dismiss="user"
-            aria-label="Cerrar"
-          ></button>
-        </div>
-        <div class="user-body">
-          <form>
-            <div class="mb-3">
-              <label for="username" class="col-form-label">Nombre de usuario:</label>
-              <input
-                type="text"
-                class="form-control rounded-element"
-                id="username"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label for="userfirstname" class="col-form-label">Nombre:</label>
-              <input
-                type="text"
-                class="form-control rounded-element"
-                id="userfirstname"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label for="userlastname" class="col-form-label">Apellidos:</label>
-              <input
-                type="text"
-                class="form-control rounded-element"
-                id="userlastname"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label for="fechanacimiento" class="col-form-label"
-                >Fecha de nacimiento:</label
-              >
-              <input
-                class="form-control rounded-element"
-                id="fechanacimiento"
-                required
-              ></input>
-            </div>
-            <div class="mb-3">
-              <label for="contrasenna" class="col-form-label"
-                >Contraseña:</label
-              >
-              <input
-                class="form-control rounded-element"
-                id="contrasenna"
-                required
-              ></input>
-            </div>
-          </form>
-        </div>
-        <div class="user-footer">
-          <button
-            type="button"
-            class="btn btn-light rounded-element"
-            data-dismiss="user"
-          >
-            Cancelar
-          </button>
-          <button type="button" class="btn btn-dark rounded-element">
-            Guardar
-          </button>
-        </div>
+<!-- Modal -->
+<div class="modal fade" tabindex="-1" aria-hidden="true" id="generalUser">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Notificaiones</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-dismiss="modal"
+          aria-label="Cerrar"
+        ></button>
+      </div>
+      <div class="modal-body scroll-container">
+        <form action="">
+          <div class="mb-3">
+            <label for="userfirstname" class="col-form-label">Nombre:</label>
+            <input
+              type="text"
+              class="form-control rounded-element"
+              id="userfirstname"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="userlastname" class="col-form-label">Apellidos:</label>
+            <input
+              type="text"
+              class="form-control rounded-element"
+              id="userlastname"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="fechanacimiento" class="col-form-label"
+              >Fecha de nacimiento:</label
+            >
+            <input
+              class="form-control rounded-element"
+              id="fechanacimiento"
+              required
+            ></input>
+          </div>
+          <div class="mb-3">
+            <label for="contrasenna" class="col-form-label"
+              >Contraseña:</label
+            >
+            <input
+              class="form-control rounded-element"
+              id="contrasenna"
+              required
+            ></input>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-dark rounded-element"
+          data-dismiss="modal"
+        >
+          Cerrar
+        </button>
       </div>
     </div>
   </div>
-  
+</div>

@@ -4,7 +4,7 @@ const fs = require("fs");
 const JSZip = require("jszip");
 const { promisify } = require("util");
 const app = express();
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 
 const sqlCon = require("./sqldatabase");
 const neo4jCon = require("./neo4jdatabase");
@@ -13,10 +13,10 @@ const moment = require("moment");
 const uploadsql = multer({ dest: "sqluploads" });
 
 //conexion a Redis
-const redis = require('redis');
-const bcrypt = require('bcrypt');
+const redis = require("redis");
+const bcrypt = require("bcrypt");
 
-const redisURL = "redis://127.0.0.1:6379"
+const redisURL = "redis://127.0.0.1:6379";
 
 const client = redis.createClient(redisURL);
 client.connect();
@@ -26,48 +26,41 @@ client.on("error", (err) => console.log("Redis Server Error", err));
 //Constantes para salt en el password
 const { hashSync, genSaltSync, compareSync } = require("bcrypt");
 
-const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const path = require("path");
 const { render } = require("ejs");
-const mongoCon = require('./mongodb.js');
+const mongoCon = require("./mongodb.js");
 app.set("view engine", "ejs");
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 let mongo;
 
 //dependencias para redis de json
 app.use(express.json());
-//app.use(express.urlencoded({ extended: true }));
 
 let current_user = "krispincita123";
-let contador = 1
-function upContador(){
+let contador = 1;
+function upContador() {
   contador++;
 }
 
-//Para ejs si no funciona
-//app.engine('ejs', require('ejs').__express);
-
-
 //gets para el login o register y new home
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
   res.render("home");
 });
 
-app.get('/register', (req, res) => {
+app.get("/register", (req, res) => {
   res.render("register");
-})
+});
 
-app.get('/login', (req, res) => {
-  res.render("login")
-})
+app.get("/login", (req, res) => {
+  res.render("login");
+});
 
-//cambié el '/' por start 
+//cambié el '/' por start
 app.get("/start", async (req, res) => {
   let query =
     "MATCH (d:Dataset) RETURN ID(d) AS id, d.user AS userCreator, d.nombre AS nombre, d.descripcion AS descripcion, d.fecha AS fecha";
@@ -90,30 +83,39 @@ app.get("/dataset/:id", async (req, res) => {
 
   const datasetResults = await neo4jCon(query);
 
-  sqlCon.query("CALL get_files_from_dataset(?);", [dsId], async (err, result) => {
-    if (err) throw err;
+  sqlCon.query(
+    "CALL get_files_from_dataset(?);",
+    [dsId],
+    async (err, result) => {
+      if (err) throw err;
 
-    let preview = result[0][0].data.toString("utf8").substring(0, 550);
+      let preview = result[0][0].data.toString("utf8").substring(0, 550);
 
-    const commentsCollection = mongo.collection('Comments');
-    const comments = await commentsCollection.find().toArray();
-    console.log(comments);
+      const commentsCollection = mongo.collection("Comments");
+      const comments = await commentsCollection.find().toArray();
+      console.log(comments);
 
-    res.render("./dataset", {
-      dsData: datasetResults[0],
-      files: result[0][0],
-      preview: preview,
-    }, { comments: comments });
-  });
+      res.render("./dataset", {
+        dsData: datasetResults[0],
+        files: result[0][0],
+        preview: preview,
+        comments: comments,
+      });
+    }
+  );
 });
 
-app.post('/addComment/:dsid', (request, reponse) => {
-    const idds = request.params.dsid;
-    console.log(request.body);
-    const commentsCollection = mongo.collection('Comments');
-    commentsCollection.insertOne({datasetid: idds, userid: current_user, 
-    comment: request.body.comment, created_at: moment().format("DD/MM/YYYY - hh:MM")})
-})
+app.post("/addComment/:dsid", (request, reponse) => {
+  const idds = request.params.dsid;
+  console.log(request.body);
+  const commentsCollection = mongo.collection("Comments");
+  commentsCollection.insertOne({
+    datasetid: idds,
+    userid: current_user,
+    comment: request.body.comment,
+    created_at: moment().format("DD/MM/YYYY - hh:MM"),
+  });
+});
 
 app.get("/conversations", (req, res) => {
   let query = `CALL get_users_with_messages('${current_user}');`;
@@ -143,94 +145,91 @@ app.get("/msgconversation/:fuser/:suser", (req, res) => {
 
 //app.posts del login y register
 //registrando un usuario
-app.post('/register', async (req, res) =>{
+app.post("/register", async (req, res) => {
+  try {
+    console.log(req.body);
+    const username = req.body.username;
+    let password = req.body.password;
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const dateOfBirth = req.body.dateOfBirth;
+    // contador será userId
 
-  try{
-  console.log(req.body);
-  const username = req.body.username;
-  let password = req.body.password;
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
-  const dateOfBirth = req.body.dateOfBirth;
-  // contador será userId
-  
-  if (!firstName || !lastName || !username || !dateOfBirth || !password){
+    if (!firstName || !lastName || !username || !dateOfBirth || !password) {
       return res.sendStatus(400);
-  }
+    }
 
-  //Check if username exists in the database
-  let comparador = await client.hGet(username, "username");
-  
-  if (comparador === username){
-      return res.status(409).send('Username already taken');
-  }
-  
-  //encriptar contraseña
-  const salt = bcrypt.genSaltSync(10);
-  let hashedPassword = bcrypt.hashSync(password, salt);
+    //Check if username exists in the database
+    let comparador = await client.hGet(username, "username");
 
+    if (comparador === username) {
+      return res.status(409).send("Username already taken");
+    }
 
-  client.multi()
-  .hSet(username, 'firstName', firstName)
-  .hSet(username, 'lastName', lastName)
-  .hSet(username, 'username', username)
-  .hSet(username, 'userId', contador)
-  .hSet(username, 'dateOfBirth', dateOfBirth)
-  .hSet(username, 'password', hashedPassword)
-  .exec((err, replies) => {
-      if (err) {
+    //encriptar contraseña
+    const salt = bcrypt.genSaltSync(10);
+    let hashedPassword = bcrypt.hashSync(password, salt);
+
+    client
+      .multi()
+      .hSet(username, "firstName", firstName)
+      .hSet(username, "lastName", lastName)
+      .hSet(username, "username", username)
+      .hSet(username, "userId", contador)
+      .hSet(username, "dateOfBirth", dateOfBirth)
+      .hSet(username, "password", hashedPassword)
+      .exec((err, replies) => {
+        if (err) {
           console.log(err);
           return res.sendStatus(500);
-      }else {
+        } else {
           console.log(replies);
           return res.sendStatus(200);
-      }
-  });
-  upContador();
-  res.send('<script>alert("Registration successful!"); window.location.href="/login";</script>');
-//    res.redirect('/login');
-
-  } catch(e){
-  console.log(e);
-  res.sendStatus(400);
+        }
+      });
+    upContador();
+    res.send(
+      '<script>alert("Registration successful!"); window.location.href="/login";</script>'
+    );
+    //    res.redirect('/login');
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(400);
   }
-
 });
 
-app.post('/login', async (req, res) => {
-  try{
-  console.log(req.body);
-  const username = req.body.username;
-  const password = req.body.password;
+app.post("/login", async (req, res) => {
+  try {
+    console.log(req.body);
+    const username = req.body.username;
+    const password = req.body.password;
 
-  if (!username || !password){
+    if (!username || !password) {
       return res.sendStatus(400);
-  }
+    }
 
-  var savedUser = await client.hGet(username, "username");
+    var savedUser = await client.hGet(username, "username");
 
-  if (savedUser === username) {
+    if (savedUser === username) {
       var savedPassword = await client.hGet(username, "password");
       bcrypt.compare(password, savedPassword, (err, result) => {
-          if (err) {
-              console.error(error);
-              return res.status(500).send("Internal Server Error");
-            }
-            if (!result) {
-              return res.status(401).send("Invalid Username or Password");
-            }
-          //user authenticated
-          current_user = username;
-          return res.redirect("/start");
-      })
-  }
-
-  } catch (e){
-  console.log(e);
-  res.sendStatus(400);
+        if (err) {
+          console.error(error);
+          return res.status(500).send("Internal Server Error");
+        }
+        if (!result) {
+          return res.status(401).send("Invalid Username or Password");
+        }
+        //user authenticated
+        current_user = username;
+        return res.redirect("/start");
+      });
+    }
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(400);
   }
 });
-
 
 app.post("/sendmsg/:fuser/:suser", uploadsql.single("file"), (req, res) => {
   const fuser = req.params.fuser;
@@ -340,7 +339,8 @@ app.get("/follow/:id/:action", async (req, res) => {
 });
 
 app.get("/generaluser", (req, res) => {
-    res.render("./generaluser");
+  // res.render("./generaluser");
+  console.log("GenalUser");
 });
 
 app.get("/image/:id", (req, res) => {
@@ -537,9 +537,9 @@ app.get("/download/:id", (req, res) => {
 });
 
 app.listen(3000, async function () {
-    sqlCon.connect(function (err) {
-        if (err) throw err;
-        console.log("SQL Database Connected!")
-    })
-    mongo = await mongoCon();
+  sqlCon.connect(function (err) {
+    if (err) throw err;
+    console.log("SQL Database Connected!");
+  });
+  mongo = await mongoCon();
 });
