@@ -1,77 +1,65 @@
-
-<div class="user fade" tabindex="-1" aria-hidden="true" id="generalUser">
-  <div class="user-dialog">
-    <div class="user-content">
-      <div class="user-header">
-        <h5 class="user-title">Usuario</h5>
+<!-- Modal -->
+<div class="modal fade" tabindex="-1" aria-hidden="true" id="generalUser">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Notificaiones</h5>
         <button
           type="button"
           class="btn-close"
-          data-dismiss="user"
+          data-dismiss="modal"
           aria-label="Cerrar"
         ></button>
       </div>
-      <div class="user-body">
-        <form>
+      <div class="modal-body scroll-container">
+        <form action="">
           <div class="mb-3">
-            <label for="username" class="col-form-label">Nombre de usuario:</label>
+            <label for="userfirstname" class="col-form-label">Nombre:</label>
             <input
               type="text"
               class="form-control rounded-element"
-              id="username"
+              id="userfirstname"
               required
             />
           </div>
           <div class="mb-3">
-            <label for="firstName" class="col-form-label">Nombre:</label>
+            <label for="userlastname" class="col-form-label">Apellidos:</label>
             <input
               type="text"
               class="form-control rounded-element"
-              id="firstName"
+              id="userlastname"
               required
             />
           </div>
           <div class="mb-3">
-            <label for="lastName" class="col-form-label">Apellidos:</label>
-            <input
-              type="text"
-              class="form-control rounded-element"
-              id="lastName"
-              required
-            />
-          </div>
-          <div class="mb-3">
-            <label for="dateOfBirth" class="col-form-label"
+            <label for="fechanacimiento" class="col-form-label"
               >Fecha de nacimiento:</label
             >
             <input
               class="form-control rounded-element"
-              id="dateOfBirth"
+              id="fechanacimiento"
               required
             ></input>
           </div>
           <div class="mb-3">
-            <label for="password" class="col-form-label"
+            <label for="contrasenna" class="col-form-label"
               >Contraseña:</label
             >
             <input
               class="form-control rounded-element"
-              id="password"
+              id="contrasenna"
               required
             ></input>
           </div>
         </form>
       </div>
-      <div class="user-footer">
+      <div class="modal-footer">
         <button
           type="button"
-          class="btn btn-light rounded-element"
-          data-dismiss="user"
+          class="btn btn-dark rounded-element"
+          data-dismiss="modal"
         >
-          Cancelar
-        </button>
-        <button type="button" class="btn btn-dark rounded-element">
-          Guardar
+          Cerrar
         </button>
       </div>
     </div>
