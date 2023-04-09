@@ -1,18 +1,48 @@
+<body>
 <h2>Comentarios</h2>
 <!-- text field to add a comment -->
-<form action="/" class="mb-4 row g-2">
-  <label for="dscomment" class="col-form-label">Agrega un comentario</label>
+<form action='/addComment' method="post" class="mb-4 row g-2">
+  <label for="comment" class="col-form-label">Agrega un comentario</label>
   <div class="col-lg">
-    <input type="text" class="form-control rounded-element" id="dscomment" />
+    <input name="comment" type="text" class="form-control rounded-element" id="comment" />
   </div>
   <div class="col-auto">
     <button type="submit" class="btn btn-dark rounded-element">Comentar</button>
   </div>
 </form>
 
-<!-- all comments -->
+  <h1>Comments</h1>
+  <div>
+    <% comments.forEach(function(result){  %>
+      <div class="desc-dwnld">
+        <div class="user">
+          <img src="https://i.pravatar.cc/50" alt="user avatar" />
+          <a href=""><span>Usuario #1</span></a>
+        </div>
+        <span class="text-muted"> <p><%= result.created_at %> </p>  </span>
+      </div>
+      <p>
+        <%= result.comment %>
+      </p>
+    <% }) %>
+    </div>
+</body>
+
+
+<!-- <% const comment = "This is a sample comment with an @exampleuser mention."; %>
+
+<p><%= formatComment(comment) %></p>
+
+<% function formatComment(comment) { %>
+  <% const pattern = /@(\w+)/g; %>
+  <% const formattedComment = comment.replace(pattern, '<a style="color: blue; text-decoration: underline;" href="/user/$1">@$1</a>'); %>
+  <% return formattedComment; %>
+<% } %> -->
+
+
+ <!-- 
 <div>
-  <!-- comment -->
+  
   <div class="desc-dwnld">
     <div class="user">
       <img src="https://i.pravatar.cc/50" alt="user avatar" />
@@ -26,7 +56,8 @@
     assumenda cupiditate voluptates, consequatur repudiandae et, quam quae unde
     necessitatibus?
   </p>
-  <!-- Responses -->
+  
+
   <div class="ms-5">
     <div class="desc-dwnld">
       <div class="user">
@@ -40,7 +71,7 @@
     </p>
   </div>
 
-  <!-- text field to add a response to that comment thread -->
+  
   <div class="ms-5">
     <form action="/" class="mb-4 row g-2">
       <div class="col-lg">
@@ -59,3 +90,6 @@
     </form>
   </div>
 </div>
+
+--> 
+
