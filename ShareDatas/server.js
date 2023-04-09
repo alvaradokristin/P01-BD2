@@ -4,6 +4,7 @@ const fs = require("fs");
 const JSZip = require("jszip");
 const { promisify } = require("util");
 const app = express();
+const bodyParser = require('body-parser');
 
 const sqlCon = require("./sqldatabase");
 const neo4jCon = require("./neo4jdatabase");
@@ -30,10 +31,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const path = require("path");
 const { render } = require("ejs");
-
+const mongoCon = require('./mongodb.js');
 app.set("view engine", "ejs");
 
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+let mongo;
 
 //dependencias para redis de json
 app.use(express.json());
@@ -85,18 +90,30 @@ app.get("/dataset/:id", async (req, res) => {
 
   const datasetResults = await neo4jCon(query);
 
-  sqlCon.query("CALL get_files_from_dataset(?);", [dsId], (err, result) => {
+  sqlCon.query("CALL get_files_from_dataset(?);", [dsId], async (err, result) => {
     if (err) throw err;
 
     let preview = result[0][0].data.toString("utf8").substring(0, 550);
+
+    const commentsCollection = mongo.collection('Comments');
+    const comments = await commentsCollection.find().toArray();
+    console.log(comments);
 
     res.render("./dataset", {
       dsData: datasetResults[0],
       files: result[0][0],
       preview: preview,
-    });
+    }, { comments: comments });
   });
 });
+
+app.post('/addComment/:dsid', (request, reponse) => {
+    const idds = request.params.dsid;
+    console.log(request.body);
+    const commentsCollection = mongo.collection('Comments');
+    commentsCollection.insertOne({datasetid: idds, userid: current_user, 
+    comment: request.body.comment, created_at: moment().format("DD/MM/YYYY - hh:MM")})
+})
 
 app.get("/conversations", (req, res) => {
   let query = `CALL get_users_with_messages('${current_user}');`;
@@ -322,6 +339,10 @@ app.get("/follow/:id/:action", async (req, res) => {
   });
 });
 
+app.get("/generaluser", (req, res) => {
+    res.render("./generaluser");
+});
+
 app.get("/image/:id", (req, res) => {
   const id = req.params.id;
 
@@ -515,9 +536,10 @@ app.get("/download/:id", (req, res) => {
   });
 });
 
-app.listen(3000, function () {
-  sqlCon.connect(function (err) {
-    if (err) throw err;
-    console.log("SQL Database Connected!");
-  });
+app.listen(3000, async function () {
+    sqlCon.connect(function (err) {
+        if (err) throw err;
+        console.log("SQL Database Connected!")
+    })
+    mongo = await mongoCon();
 });
