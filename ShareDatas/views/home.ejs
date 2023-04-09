@@ -1,27 +1,37 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <title>Home Page</title>
-        <style>
-          /* Add some style to the buttons */
-          button {
-            border: none;
-            border-radius: 20px;
-            padding: 10px 20px;
-            background-color: black;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-          }
-      
-          button:hover {
-            background-color: grey;
-          }
-        </style>
-      </head>
-      <body>
-        <h1>Welcome to Datasets!</h1>
-        <button onclick="location.href='/register'">Register</button>
-        <button onclick="location.href='/login'">Login</button>
-      </body>
+  <head>
+    <%- include('./partials/head'); %>
+  </head>
+  <body class="bg-custum">
+    <main class="d-flex justify-content-center align-items-center mt-5">
+      <div class="w-50">
+        <img
+          class="mx-auto d-block h-25"
+          src="/images/sharedatas-logo.png"
+          alt="Logo de la aplicacion"
+          style="max-height: 85px"
+        />
+        <h1 class="fw-bold mx-auto text-center">Welcome to ShareDatas!</h1>
+        <br />
+        <br />
+        <div class="d-flex justify-content-center align-items-center my-3">
+          <button
+            class="btn btn-dark rounded-element w-100"
+            onclick="location.href='/login'"
+          >
+            Login
+          </button>
+        </div>
+        <div class="d-flex justify-content-center align-items-center my-3">
+          <button
+            class="btn btn-light rounded-element"
+            onclick="location.href='/register'"
+          >
+            Register
+          </button>
+        </div>
+      </div>
+    </main>
+  </body>
 </html>
