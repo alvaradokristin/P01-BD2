@@ -1,7 +1,7 @@
 
 //MONGODB CONNECTION
 const MongoClient = require('mongodb').MongoClient;
-const url = 'mongodb://localhost:27017/Database';
+const url = 'mongodb://0.0.0.0:27017/Database';
 const client = new MongoClient(url);
 const express = require('express');
 const app = express();

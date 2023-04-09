@@ -26,7 +26,7 @@ client.on("error", (err) => console.log("Redis Server Error", err));
 //Constantes para salt en el password
 const { hashSync, genSaltSync, compareSync } = require("bcrypt");
 
-const bodyParser = require("body-parser");
+
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const path = require("path");
@@ -231,6 +231,8 @@ app.post('/login', async (req, res) => {
   }
 });
 
+//Cambiar la información del usuario
+//app.post('/generaluser', (req, err) =>{});
 
 app.post("/sendmsg/:fuser/:suser", uploadsql.single("file"), (req, res) => {
   const fuser = req.params.fuser;
@@ -340,7 +342,7 @@ app.get("/follow/:id/:action", async (req, res) => {
 });
 
 app.get("/generaluser", (req, res) => {
-    res.render("./generaluser");
+    res.render("generaluser");
 });
 
 app.get("/image/:id", (req, res) => {
