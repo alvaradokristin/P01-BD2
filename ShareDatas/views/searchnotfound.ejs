@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include('./partials/head'); %>
+  </head>
+  <body>
+    <header><%- include('./partials/header'); %></header>
+    <div class="container-lg"><%- include('./partials/searchbar'); %></div>
+    <main class="container-lg">
+      <h1><code class="fw-bold">Elemento no encontrado</code></h1>
+      <br />
+      <p class="alert alert-danger">
+        El texto buscado no corresponde al nombre de un data set o a un username
+      </p>
+    </main>
+  </body>
+  <footer class="fixed-bottom"><%- include('./partials/footer'); %></footer>
+</html>

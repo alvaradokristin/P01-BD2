@@ -1,7 +1,18 @@
-<input
-  type="text"
-  class="form-control rounded-element form-rounded my-1"
-  placeholder="Buscar... "
-  aria-label="Buscar"
-  autocomplete="off"
-/>
+<form action="/searchElement" method="post" class="my-3">
+  <div class="row">
+    <div class="col-lg">
+      <input
+        type="text"
+        id="searchText"
+        name="searchText"
+        class="form-control rounded-element form-rounded my-1"
+        placeholder="Buscar... "
+        aria-label="Buscar"
+        autocomplete="off"
+      />
+    </div>
+    <div class="col-auto my-auto">
+      <button type="submit" class="btn btn-dark rounded-element">Buscar</button>
+    </div>
+  </div>
+</form>

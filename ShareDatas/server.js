@@ -74,6 +74,57 @@ app.get("/modal", (req, res) => {
   );
 });
 
+app.post("/searchElement", async (req, res) => {
+  const text = req.body.searchText;
+  // search if the text is an username
+  try {
+    try {
+      // search if the text is the name of a dataset and open the dataset page
+      let neoQuery = `MATCH(d:Dataset) WHERE d.nombre = "${text}" RETURN ID(d) AS id, d.user AS userCreator, d.nombre AS nombre, d.descripcion AS descripcion, d.fecha AS fecha`;
+      const datasetResults = await neo4jCon(neoQuery);
+      sqlCon.query(
+        "CALL get_files_from_dataset(?);",
+        [datasetResults[0].id],
+        async (err, result) => {
+          if (err) throw err;
+          let preview = result[0][0].data.toString("utf8").substring(0, 550);
+          const commentsCollection = mongo.collection("Comments");
+          const comments = await commentsCollection.find().toArray();
+          console.log(comments);
+          res.render("./dataset", {
+            dsData: datasetResults[0],
+            files: result[0][0],
+            preview: preview,
+            comments: comments,
+          });
+        }
+      );
+    } catch (error) {
+      // search if the text is the name of a user and open the user page
+      let savedUser = await client.hGet(text, "username");
+      if (savedUser === null) {
+        throw err;
+      }
+      const querydataset = `MATCH (d:Dataset)
+      WHERE d.user = "${savedUser}"
+      RETURN ID(d) AS id, d.user AS userCreator, d.nombre AS nombre, d.descripcion AS descripcion, d.fecha AS fecha`;
+      const datasetResults = await neo4jCon(querydataset);
+      let query = `SELECT is_following('${savedUser}', '${current_user}') AS following;`;
+      sqlCon.query(query, function (err, result) {
+        if (err) throw err;
+        res.render("./user", {
+          dataset: datasetResults,
+          suser: savedUser,
+          cuser: current_user,
+          following: result[0],
+        });
+      });
+    }
+  } catch (error) {
+    res.render("./searchnotfound");
+  }
+});
+
 app.get("/dataset/:id", async (req, res) => {
   const dsId = req.params.id;
 
