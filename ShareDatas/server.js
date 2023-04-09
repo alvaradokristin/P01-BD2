@@ -11,6 +11,20 @@ const moment = require("moment");
 
 const uploadsql = multer({ dest: "sqluploads" });
 
+//conexion a Redis
+const redis = require('redis');
+const bcrypt = require('bcrypt');
+
+const redisURL = "redis://127.0.0.1:6379"
+
+const client = redis.createClient(redisURL);
+client.connect();
+
+client.on("error", (err) => console.log("Redis Server Error", err));
+
+//Constantes para salt en el password
+const { hashSync, genSaltSync, compareSync } = require("bcrypt");
+
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -21,9 +35,35 @@ app.set("view engine", "ejs");
 
 app.use(express.static(path.join(__dirname, "public")));
 
-let current_user = "krispincita123";
+//dependencias para redis de json
+app.use(express.json());
+//app.use(express.urlencoded({ extended: true }));
 
-app.get("/", async (req, res) => {
+let current_user = "krispincita123";
+let contador = 1
+function upContador(){
+  contador++;
+}
+
+//Para ejs si no funciona
+//app.engine('ejs', require('ejs').__express);
+
+
+//gets para el login o register y new home
+app.get('/', (req, res) => {
+  res.render("home");
+});
+
+app.get('/register', (req, res) => {
+  res.render("register");
+})
+
+app.get('/login', (req, res) => {
+  res.render("login")
+})
+
+//cambié el '/' por start 
+app.get("/start", async (req, res) => {
   let query =
     "MATCH (d:Dataset) RETURN ID(d) AS id, d.user AS userCreator, d.nombre AS nombre, d.descripcion AS descripcion, d.fecha AS fecha";
   const datasetResults = await neo4jCon(query);
@@ -83,6 +123,97 @@ app.get("/msgconversation/:fuser/:suser", (req, res) => {
     });
   });
 });
+
+//app.posts del login y register
+//registrando un usuario
+app.post('/register', async (req, res) =>{
+
+  try{
+  console.log(req.body);
+  const username = req.body.username;
+  let password = req.body.password;
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const dateOfBirth = req.body.dateOfBirth;
+  // contador será userId
+  
+  if (!firstName || !lastName || !username || !dateOfBirth || !password){
+      return res.sendStatus(400);
+  }
+
+  //Check if username exists in the database
+  let comparador = await client.hGet(username, "username");
+  
+  if (comparador === username){
+      return res.status(409).send('Username already taken');
+  }
+  
+  //encriptar contraseña
+  const salt = bcrypt.genSaltSync(10);
+  let hashedPassword = bcrypt.hashSync(password, salt);
+
+
+  client.multi()
+  .hSet(username, 'firstName', firstName)
+  .hSet(username, 'lastName', lastName)
+  .hSet(username, 'username', username)
+  .hSet(username, 'userId', contador)
+  .hSet(username, 'dateOfBirth', dateOfBirth)
+  .hSet(username, 'password', hashedPassword)
+  .exec((err, replies) => {
+      if (err) {
+          console.log(err);
+          return res.sendStatus(500);
+      }else {
+          console.log(replies);
+          return res.sendStatus(200);
+      }
+  });
+  upContador();
+  res.send('<script>alert("Registration successful!"); window.location.href="/login";</script>');
+//    res.redirect('/login');
+
+  } catch(e){
+  console.log(e);
+  res.sendStatus(400);
+  }
+
+});
+
+app.post('/login', async (req, res) => {
+  try{
+  console.log(req.body);
+  const username = req.body.username;
+  const password = req.body.password;
+
+  if (!username || !password){
+      return res.sendStatus(400);
+  }
+
+  var savedUser = await client.hGet(username, "username");
+
+  if (savedUser === username) {
+      var savedPassword = await client.hGet(username, "password");
+      bcrypt.compare(password, savedPassword, (err, result) => {
+          if (err) {
+              console.error(error);
+              return res.status(500).send("Internal Server Error");
+            }
+            if (!result) {
+              return res.status(401).send("Invalid Username or Password");
+            }
+          //user authenticated
+          current_user = username;
+          return res.redirect("/start");
+      })
+  }
+
+  } catch (e){
+  console.log(e);
+  res.sendStatus(400);
+  }
+});
+
 
 app.post("/sendmsg/:fuser/:suser", uploadsql.single("file"), (req, res) => {
   const fuser = req.params.fuser;

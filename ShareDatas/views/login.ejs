@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>Login</title>
+        <style>
+            /* Add some style to the buttons */
+            button {
+                border: none;
+                border-radius: 20px;
+                padding: 10px 20px;
+                background-color: black;
+                color: white;
+                font-size: 16px;
+                cursor: pointer;
+            }
+            button:hover {
+            background-color: grey;
+        }
+    </style>
+</head>
+<body>
+    <h1>Login</h1>
+    <form method="post" action="/login">
+        <input type="text" name="username" placeholder="Username" required><br><br>
+        <input type="password" name="password" placeholder="Password" required><br><br>
+        <button type="submit">Login</button>
+    </form>
+    <button onclick="location.href='/register'">Register</button>
+</body>
+</html>
