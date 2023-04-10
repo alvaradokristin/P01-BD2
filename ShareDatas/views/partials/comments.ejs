@@ -22,22 +22,17 @@
         <span class="text-muted"> <p><%= result.created_at %> </p>  </span>
       </div>
       <p>
-        <%= result.comment %>
+        <% result.comment.split(' ').forEach((word) => { %>
+          <% if (word.charAt(0) === '@') { %>
+            <u><span style="color: blue;"><%= word %></span></u> 
+          <% } else { %>
+            <%= word %> 
+          <% } %>
+        <% }); %>
       </p>
     <% }) %>
     </div>
 </body>
-
-
-<!-- <% const comment = "This is a sample comment with an @exampleuser mention."; %>
-
-<p><%= formatComment(comment) %></p>
-
-<% function formatComment(comment) { %>
-  <% const pattern = /@(\w+)/g; %>
-  <% const formattedComment = comment.replace(pattern, '<a style="color: blue; text-decoration: underline;" href="/user/$1">@$1</a>'); %>
-  <% return formattedComment; %>
-<% } %> -->
 
 
  <!-- 
