@@ -28,6 +28,6 @@
   },
   "devDependencies": {
     "node-sass": "^8.0.0",
-    "nodemon": "^2.0.21"
+    "nodemon": "^2.0.22"
   }
 }

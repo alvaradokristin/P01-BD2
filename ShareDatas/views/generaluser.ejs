@@ -3,7 +3,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Notificaiones</h5>
+        <h5 class="modal-title">Cambiar Información de Usuario</h5>
         <button
           type="button"
           class="btn-close"
@@ -12,55 +12,62 @@
         ></button>
       </div>
       <div class="modal-body scroll-container">
-        <form action="">
+        <form method="POST" action="/generaluser">
           <div class="mb-3">
-            <label for="userfirstname" class="col-form-label">Nombre:</label>
+            <label for="firstName" class="col-form-label">Nombre:</label>
             <input
               type="text"
               class="form-control rounded-element"
-              id="userfirstname"
+              id="firstName"
+              name="firstName"
               required
             />
           </div>
           <div class="mb-3">
-            <label for="userlastname" class="col-form-label">Apellidos:</label>
+            <label for="lastName" class="col-form-label">Apellidos:</label>
             <input
               type="text"
               class="form-control rounded-element"
-              id="userlastname"
+              id="lastName"
+              name="lastName"
               required
             />
           </div>
           <div class="mb-3">
-            <label for="fechanacimiento" class="col-form-label"
+            <label for="dateOfBirth" class="col-form-label"
               >Fecha de nacimiento:</label
             >
             <input
               class="form-control rounded-element"
-              id="fechanacimiento"
+              id="dateOfBirth"
+              name="dateOfBirth"
               required
             ></input>
           </div>
           <div class="mb-3">
-            <label for="contrasenna" class="col-form-label"
+            <label for="password" class="col-form-label"
               >Contraseña:</label
             >
             <input
               class="form-control rounded-element"
-              id="contrasenna"
+              id="password"
+              name="password"
               required
             ></input>
           </div>
-        </form>
       </div>
       <div class="modal-footer">
         <button
           type="button"
-          class="btn btn-dark rounded-element"
+          class="btn btn-light rounded-element"
           data-dismiss="modal"
         >
           Cerrar
         </button>
+        <button type="submit" class="btn btn-dark rounded-element">
+          Cambiar
+        </button>
+      </form>
       </div>
     </div>
   </div>
