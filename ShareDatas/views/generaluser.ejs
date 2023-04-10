@@ -1,0 +1,74 @@
+<!-- Modal -->
+<div class="modal fade" tabindex="-1" aria-hidden="true" id="generalUser">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cambiar Información de Usuario</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-dismiss="modal"
+          aria-label="Cerrar"
+        ></button>
+      </div>
+      <div class="modal-body scroll-container">
+        <form method="POST" action="/generaluser">
+          <div class="mb-3">
+            <label for="firstName" class="col-form-label">Nombre:</label>
+            <input
+              type="text"
+              class="form-control rounded-element"
+              id="firstName"
+              name="firstName"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="lastName" class="col-form-label">Apellidos:</label>
+            <input
+              type="text"
+              class="form-control rounded-element"
+              id="lastName"
+              name="lastName"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="dateOfBirth" class="col-form-label"
+              >Fecha de nacimiento:</label
+            >
+            <input
+              class="form-control rounded-element"
+              id="dateOfBirth"
+              name="dateOfBirth"
+              required
+            ></input>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="col-form-label"
+              >Contraseña:</label
+            >
+            <input
+              class="form-control rounded-element"
+              id="password"
+              name="password"
+              required
+            ></input>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-light rounded-element"
+          data-dismiss="modal"
+        >
+          Cerrar
+        </button>
+        <button type="submit" class="btn btn-dark rounded-element">
+          Cambiar
+        </button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,7 +2,7 @@
   class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3 bg-custum"
 >
   <div class="container-xxl">
-    <a href="/" class="navbar-brand">
+    <a href="/start" class="navbar-brand">
       <img
         src="/images/sharedatas-logo.png"
         alt="Logo de la aplicacion"
@@ -23,17 +23,43 @@
     <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
       <ul class="navbar-nav flex-grow align-items-end">
         <li class="nav-item dropdown">
-          <a class="nav-link icon" id="navbarDropdown" role="button">
+          <a
+            href="/modal"
+            class="nav-link icon"
+            id="navbarDropdown"
+            role="button"
+            data-toggle="modal"
+            data-target="#notificationModal"
+            ><i class="fa-solid fa-bell"></i
+          ></a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a
+            href="/conversations"
+            class="nav-link icon"
+            id="navbarDropdown"
+            role="button"
+          >
             <i class="fa-solid fa-message"></i
           ></a>
         </li>
 
         <li class="nav-item dropdown">
-          <a class="nav-link icon" id="navbarDropdown" role="button"
-            ><i class="fa-solid fa-user"></i
+          <a
+            href="/generaluser"
+            class="nav-link icon"
+            id="navbarDropdown"
+            role="button"
+            data-toggle="modal"
+            data-target="#generalUser"
+          >
+            <i class="fa-solid fa-user"></i
           ></a>
         </li>
       </ul>
     </div>
   </div>
+
+  <%- include('./notifmodal'); %> <%- include('../generaluser'); %>
 </nav>

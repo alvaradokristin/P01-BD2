@@ -1,0 +1,18 @@
+<table class="table table-striped margin-y">
+  <tr>
+    <th>Usuarios</th>
+  </tr>
+
+  <% msgdata.forEach(function(result) { %>
+  <tr>
+    <td>
+      <div class="user">
+        <img src="https://i.pravatar.cc/50" alt="user avatar" />
+        <a href="/msgconversation/<%= current_user %>/<%= result.user_id %>"
+          ><span><%= result.user_id %></span></a
+        >
+      </div>
+    </td>
+  </tr>
+  <% }) %>
+</table>

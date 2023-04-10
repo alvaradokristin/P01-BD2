@@ -9,10 +9,10 @@
     <div class="container-lg"><%- include('./partials/searchbar'); %></div>
 
     <main class="container-lg">
-      <%- include('./partials/dstheader'); %> <%- include('./partials/dstdata');
-      %>
+      <%- include('./partials/dstheader', { datasetData: dsData }); %> <%-
+      include('./partials/dstdata', { datasetData: dsData, files: files }); %>
 
-      <div class="mb-2"><%- include('./partials/comments'); %></div>
+      <div class="mb-2"><%- include('./partials/comments', {comments: comments, datasetData: dsData}); %></div>
     </main>
   </body>
 
