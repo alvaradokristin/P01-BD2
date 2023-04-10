@@ -41,7 +41,7 @@ let mongo;
 //dependencias para redis de json
 app.use(express.json());
 
-let current_user = "krispincita123";
+let current_user = "test123";
 let contador = 1;
 function upContador() {
   contador++;
@@ -501,15 +501,20 @@ app.post(
         uploadData.imageType,
         uploadData.dsImage,
       ],
-      (err, result) => {
+      async (err, result) => {
         if (err) throw err;
 
         let preview = result[0][0].data.toString("utf8").substring(0, 550);
+
+        const commentsCollection = mongo.collection("Comments");
+        const comments = await commentsCollection.find({datasetid:datasetResults[0].id}).toArray();
+        console.log(comments);
 
         res.render("./dataset", {
           dsData: datasetResults[0],
           files: result[0][0],
           preview: preview,
+          comments: comments
         });
       }
     );
