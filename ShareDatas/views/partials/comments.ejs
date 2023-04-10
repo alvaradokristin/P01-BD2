@@ -1,7 +1,7 @@
 <body>
 <h2>Comentarios</h2>
 <!-- text field to add a comment -->
-<form action='/addComment' method="post" class="mb-4 row g-2">
+<form action='/addComment/<%= dsData.id %>' method="post" class="mb-4 row g-2">
   <label for="comment" class="col-form-label">Agrega un comentario</label>
   <div class="col-lg">
     <input name="comment" type="text" class="form-control rounded-element" id="comment" />

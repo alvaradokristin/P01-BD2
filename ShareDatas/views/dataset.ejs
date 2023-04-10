@@ -12,7 +12,7 @@
       <%- include('./partials/dstheader', { datasetData: dsData }); %> <%-
       include('./partials/dstdata', { datasetData: dsData, files: files }); %>
 
-      <div class="mb-2"><%- include('./partials/comments', {comments: comments}); %></div>
+      <div class="mb-2"><%- include('./partials/comments', {comments: comments, datasetData: dsData}); %></div>
     </main>
   </body>
 
