@@ -166,7 +166,7 @@ app.post("/addComment/:dsid", (request, response) => {
   const commentsCollection = mongo.collection("Comments");
   commentsCollection.insertOne({
     datasetid: idds,
-    userid: current_user,
+    username: current_user,
     comment: request.body.comment,
     created_at: moment().format("DD/MM/YYYY - hh:MM"),
   });
