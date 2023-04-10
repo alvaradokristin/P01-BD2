@@ -231,9 +231,6 @@ app.post("/login", async (req, res) => {
   }
 });
 
-//Cambiar la información del usuario
-//app.post('/generaluser', (req, err) =>{});
-
 app.post("/sendmsg/:fuser/:suser", uploadsql.single("file"), (req, res) => {
   const fuser = req.params.fuser;
   const suser = req.params.suser;
@@ -341,9 +338,48 @@ app.get("/follow/:id/:action", async (req, res) => {
   });
 });
 
+//Cambiar información de usuario
+//app.post('/generaluser', (req, err) =>{});
 app.get("/generaluser", (req, res) => {
-  // res.render("./generaluser");
-  console.log("GenalUser");
+  
+});
+
+app.post('/generaluser', async (req, res) => {
+  const newName = req.body.firstName;
+  const newLastName = req.body.lastName;
+  const newDateOfBirth = req.body.dateOfBirth;
+  const newPassword = req.body.password;
+  
+  //encriptar contraseña
+  const salt = bcrypt.genSaltSync(10);
+  let hashedPassword = bcrypt.hashSync(newPassword, salt);
+
+  if (!newName || !newLastName || !newDateOfBirth || !newPassword) {
+    return res.sendStatus(400);
+  }
+
+  //hacer sets para nueva info y luego mandar mensaje de exito o error
+  //Por hacer
+  client
+    .multi()
+    .hSet(current_user, "firstName", newName)
+    .hSet(current_user, "lastName", newLastName)
+    .hSet(current_user, "dateOfBirth", newDateOfBirth)
+    .hSet(current_user, "password", hashedPassword)
+    .exec((err, replies) => {
+      if (err) {
+        console.log(err);
+        return res.sendStatus(500);
+      } else {
+        console.log(replies);
+        return res.sendStatus(200);
+      }
+    });
+    
+    console.log("Se cambio la info"  );
+    res.send(
+      '<script>alert("Se cambio la información exitosamente!"); window.location.href="/start";</script>'
+    );
 });
 
 app.get("/image/:id", (req, res) => {

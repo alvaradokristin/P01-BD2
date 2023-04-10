@@ -3,6 +3,16 @@
     <head>
         <title>Register</title>
         <style>
+            /* Center the form on the page */
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                font-family: 'Segoe UI', sans-serif;
+            }
+            
             /* Add some style to the buttons */
             button {
                 border: none;
@@ -13,21 +23,37 @@
                 font-size: 16px;
                 cursor: pointer;
             }
+            
             button:hover {
-            background-color: grey;
-        }
-    </style>
-</head>
-<body>
-    <h1>Register</h1>
-    <form method="post" action="/register">
-        <input type="text" name="username" placeholder="Username" required><br><br>
-        <input type="password" name="password" placeholder="Password" required><br><br>
-        <input type="text" name="firstName" placeholder="First Name" required><br><br>
-        <input type="text" name="lastName" placeholder="Last Name" required><br><br>
-        <input type="date" name="dateOfBirth" placeholder="Date of Birth" required max="<%= new Date().toISOString().split('T')[0] %>"><br><br>
-        <button type="submit">Register</button>
-    </form>
-    <button onclick="location.href='/login'">Login</button>
-</body>
+                background-color: grey;
+            }
+            
+            /* Round the input fields */
+            input[type="text"], input[type="password"], input[type="date"] {
+                border: none;
+                border-radius: 30px;
+                padding: 10px;
+                font-size: 16px;
+                margin-bottom: 20px;
+            }
+            
+            /* Reduce the padding for the submit button */
+            button[type="submit"] {
+                padding: 10px 25px;
+                margin-top: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Register</h1>
+        <form method="post" action="/register">
+            <input type="text" name="username" placeholder="Username" required><br>
+            <input type="password" name="password" placeholder="Password" required><br>
+            <input type="text" name="firstName" placeholder="First Name" required><br>
+            <input type="text" name="lastName" placeholder="Last Name" required><br>
+            <input type="date" name="dateOfBirth" placeholder="Date of Birth" required max="<%= new Date().toISOString().split('T')[0] %>"><br>
+            <button type="submit">Register</button>
+        </form>
+        <button onclick="location.href='/login'">Login</button>
+    </body>
 </html>

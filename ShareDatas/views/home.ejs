@@ -3,25 +3,34 @@
     <head>
         <title>Home Page</title>
         <style>
-          /* Add some style to the buttons */
-          button {
-            border: none;
-            border-radius: 20px;
-            padding: 10px 20px;
-            background-color: black;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-          }
+            /* Add some style to the buttons */
+            button {
+                border: none;
+                border-radius: 20px;
+                padding: 10px 20px;
+                background-color: black;
+                color: white;
+                font-size: 16px;
+                cursor: pointer;
+            }
       
-          button:hover {
-            background-color: grey;
-          }
+            button:hover {
+                background-color: grey;
+            }
+            
+            body {
+                font-family: "Segoe UI", sans-serif;
+                text-align: center;
+            }
+            
+            h1 {
+                font-weight: bold;
+            }
         </style>
-      </head>
-      <body>
+    </head>
+    <body>
         <h1>Welcome to Datasets!</h1>
         <button onclick="location.href='/register'">Register</button>
         <button onclick="location.href='/login'">Login</button>
-      </body>
+    </body>
 </html>
