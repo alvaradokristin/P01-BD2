@@ -125,40 +125,44 @@ app.post("/searchElement", async (req, res) => {
   }
 });
 
+
 app.get("/dataset/:id", async (req, res) => {
   const dsId = req.params.id;
-
-  const query = `MATCH (d:Dataset)
-    WHERE ID(d) = ${dsId}
-    RETURN ID(d) AS id, d.user AS userCreator, d.nombre AS nombre, d.descripcion AS descripcion, d.fecha AS fecha`;
-
-  const datasetResults = await neo4jCon(query);
-
-  sqlCon.query(
-    "CALL get_files_from_dataset(?);",
-    [dsId],
-    async (err, result) => {
-      if (err) throw err;
-
-      let preview = result[0][0].data.toString("utf8").substring(0, 550);
-
-      const commentsCollection = mongo.collection("Comments");
-      const comments = await commentsCollection.find().toArray();
-      console.log(comments);
-
-      res.render("./dataset", {
-        dsData: datasetResults[0],
-        files: result[0][0],
-        preview: preview,
-        comments: comments,
-      });
-    }
-  );
+  loadDataComments(dsId, res);
 });
+  async function loadDataComments (dsId, res){
+      
+    const query = `MATCH (d:Dataset)
+      WHERE ID(d) = ${dsId}
+      RETURN ID(d) AS id, d.user AS userCreator, d.nombre AS nombre, d.descripcion AS descripcion, d.fecha AS fecha`;
+  
+    const datasetResults = await neo4jCon(query);
+    console.log(dsId);
+    sqlCon.query(
+      "CALL get_files_from_dataset(?);",
+      [dsId],
+      async (err, result) => {
+        console.log(result);
+        if (err) throw err;
+        
+        let preview = result[0][0].data.toString("utf8").substring(0, 550);
+  
+        const commentsCollection = mongo.collection("Comments");
+        const comments = await commentsCollection.find({datasetid:dsId}).toArray();
+        console.log(comments);
+  
+        res.render("./dataset", {
+          dsData: datasetResults[0],
+          files: result[0][0],
+          preview: preview,
+          comments: comments,
+        });
+      }
+    );
+  };
 
-app.post("/addComment/:dsid", (request, reponse) => {
+app.post("/addComment/:dsid", (request, response) => {
   const idds = request.params.dsid;
-  console.log(request.body);
   const commentsCollection = mongo.collection("Comments");
   commentsCollection.insertOne({
     datasetid: idds,
@@ -166,6 +170,7 @@ app.post("/addComment/:dsid", (request, reponse) => {
     comment: request.body.comment,
     created_at: moment().format("DD/MM/YYYY - hh:MM"),
   });
+  loadDataComments(idds, response);
 });
 
 app.get("/conversations", (req, res) => {
@@ -471,6 +476,7 @@ app.post(
           dsData: datasetResults[0],
           files: result[0][0],
           preview: preview,
+          comments: [],
         });
       }
     );
@@ -491,7 +497,7 @@ app.get("/download/:id", (req, res) => {
 
   sqlCon.query(sql, params, async (error, results) => {
     if (error) throw error;
-
+    
     const fileData = await results[0][0].data;
     const fileName = await results[0][0].filename;
 
