@@ -69,9 +69,7 @@ app.get("/start", async (req, res) => {
 });
 
 app.get("/modal", (req, res) => {
-  console.log(
-    "Este es un test, aca deberia hacer algo para tomar las notificaciones y ponerlar en el modal"
-  );
+  console.log("");
 });
 
 app.post("/searchElement", async (req, res) => {
@@ -90,7 +88,6 @@ app.post("/searchElement", async (req, res) => {
           let preview = result[0][0].data.toString("utf8").substring(0, 550);
           const commentsCollection = mongo.collection("Comments");
           const comments = await commentsCollection.find().toArray();
-          console.log(comments);
           res.render("./dataset", {
             dsData: datasetResults[0],
             files: result[0][0],
@@ -125,41 +122,38 @@ app.post("/searchElement", async (req, res) => {
   }
 });
 
-
 app.get("/dataset/:id", async (req, res) => {
   const dsId = req.params.id;
   loadDataComments(dsId, res);
 });
-  async function loadDataComments (dsId, res){
-      
-    const query = `MATCH (d:Dataset)
+async function loadDataComments(dsId, res) {
+  const query = `MATCH (d:Dataset)
       WHERE ID(d) = ${dsId}
       RETURN ID(d) AS id, d.user AS userCreator, d.nombre AS nombre, d.descripcion AS descripcion, d.fecha AS fecha`;
-  
-    const datasetResults = await neo4jCon(query);
-    console.log(dsId);
-    sqlCon.query(
-      "CALL get_files_from_dataset(?);",
-      [dsId],
-      async (err, result) => {
-        console.log(result);
-        if (err) throw err;
-        
-        let preview = result[0][0].data.toString("utf8").substring(0, 550);
-  
-        const commentsCollection = mongo.collection("Comments");
-        const comments = await commentsCollection.find({datasetid:dsId}).toArray();
-        console.log(comments);
-  
-        res.render("./dataset", {
-          dsData: datasetResults[0],
-          files: result[0][0],
-          preview: preview,
-          comments: comments,
-        });
-      }
-    );
-  };
+
+  const datasetResults = await neo4jCon(query);
+  sqlCon.query(
+    "CALL get_files_from_dataset(?);",
+    [dsId],
+    async (err, result) => {
+      if (err) throw err;
+
+      let preview = result[0][0].data.toString("utf8").substring(0, 550);
+
+      const commentsCollection = mongo.collection("Comments");
+      const comments = await commentsCollection
+        .find({ datasetid: dsId })
+        .toArray();
+
+      res.render("./dataset", {
+        dsData: datasetResults[0],
+        files: result[0][0],
+        preview: preview,
+        comments: comments,
+      });
+    }
+  );
+}
 
 app.post("/addComment/:dsid", (request, response) => {
   const idds = request.params.dsid;
@@ -203,7 +197,6 @@ app.get("/msgconversation/:fuser/:suser", (req, res) => {
 //registrando un usuario
 app.post("/register", async (req, res) => {
   try {
-    console.log(req.body);
     const username = req.body.username;
     let password = req.body.password;
     const firstName = req.body.firstName;
@@ -236,10 +229,8 @@ app.post("/register", async (req, res) => {
       .hSet(username, "password", hashedPassword)
       .exec((err, replies) => {
         if (err) {
-          console.log(err);
           return res.sendStatus(500);
         } else {
-          console.log(replies);
           return res.sendStatus(200);
         }
       });
@@ -249,14 +240,12 @@ app.post("/register", async (req, res) => {
     );
     //    res.redirect('/login');
   } catch (e) {
-    console.log(e);
     res.sendStatus(400);
   }
 });
 
 app.post("/login", async (req, res) => {
   try {
-    console.log(req.body);
     const username = req.body.username;
     const password = req.body.password;
 
@@ -396,16 +385,14 @@ app.get("/follow/:id/:action", async (req, res) => {
 
 //Cambiar información de usuario
 //app.post('/generaluser', (req, err) =>{});
-app.get("/generaluser", (req, res) => {
-  
-});
+app.get("/generaluser", (req, res) => {});
 
-app.post('/generaluser', async (req, res) => {
+app.post("/generaluser", async (req, res) => {
   const newName = req.body.firstName;
   const newLastName = req.body.lastName;
   const newDateOfBirth = req.body.dateOfBirth;
   const newPassword = req.body.password;
-  
+
   //encriptar contraseña
   const salt = bcrypt.genSaltSync(10);
   let hashedPassword = bcrypt.hashSync(newPassword, salt);
@@ -431,11 +418,9 @@ app.post('/generaluser', async (req, res) => {
         return res.sendStatus(200);
       }
     });
-    
-    console.log("Se cambio la info"  );
-    res.send(
-      '<script>alert("Se cambio la información exitosamente!"); window.location.href="/start";</script>'
-    );
+  res.send(
+    '<script>alert("Se cambio la información exitosamente!"); window.location.href="/start";</script>'
+  );
 });
 
 app.get("/image/:id", (req, res) => {
@@ -512,14 +497,15 @@ app.post(
         let preview = result[0][0].data.toString("utf8").substring(0, 550);
 
         const commentsCollection = mongo.collection("Comments");
-        const comments = await commentsCollection.find({datasetid:datasetResults[0].id}).toArray();
-        console.log(comments);
+        const comments = await commentsCollection
+          .find({ datasetid: datasetResults[0].id })
+          .toArray();
 
         res.render("./dataset", {
           dsData: datasetResults[0],
           files: result[0][0],
           preview: preview,
-          comments: comments
+          comments: comments,
         });
       }
     );
@@ -540,7 +526,7 @@ app.get("/download/:id", (req, res) => {
 
   sqlCon.query(sql, params, async (error, results) => {
     if (error) throw error;
-    
+
     const fileData = await results[0][0].data;
     const fileName = await results[0][0].filename;
 
